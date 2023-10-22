@@ -1,21 +1,25 @@
 "use client"
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import LoadingComponent from '../LoadingComponent';
 
 const BinaryView = () => {
+   const [loading, setLoading] = useState(true);
 
    const ref = useRef<HTMLDivElement>(null)
+
    useEffect(() => {
       const t = setInterval(() => {
          if (ref.current) {
             ref.current.innerText = `${generaterandomStrong(ref.current.getBoundingClientRect().width * ref.current.getBoundingClientRect().height / 100)}`
          }
       }, 100)
+      setLoading(false)
       return () => { clearInterval(t) }
    }, [ref]);
 
-   return (
-      <div className="bg-black fixed inset-0 z-0 break-words w-screen h-screen text-red-500 overflow-hidden isolate" >
+   return loading ? <LoadingComponent/>: (
+      <div style={{ zIndex: -1 }} className="animate-blink-opacity  bg-black fixed inset-0 z-0 break-words w-screen h-screen text-red-500 overflow-hidden isolate" >
          <div ref={ref}
             style={{
                WebkitMaskImage: "radial-gradient(circle at 50% 50%,black 10%, transparent 80%)",

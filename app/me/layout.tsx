@@ -1,4 +1,5 @@
 import BinaryView from '@/components/visitcard/views/BinaryView'
+import MainView from '@/components/visitcard/views/MainView'
 import type { Metadata } from 'next'
 
 
@@ -13,6 +14,11 @@ export default function RootLayout({
    children: React.ReactNode
 }) {
    return (
-      <section className="h-screen w-screen relative overflow-hidden">{children}</section>
+      <section className="h-screen w-screen relative overflow-hidden">
+         <MainView>
+            {children}
+            <BinaryView/>
+         </MainView>
+      </section>
    )
 }

@@ -8,6 +8,8 @@ export const colors = {
    Indigo: "#2D206A",
    Black: "#0B0414",
    Magenta: "#BA1482",
-   Navy: "#1E093D"
+   Navy: "#1E093D",
+   sepehrOrange:"#dc280bc7",
+   border:"#000"
 }
 

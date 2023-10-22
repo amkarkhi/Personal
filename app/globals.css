@@ -25,3 +25,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+.animate-blink-opacity{
+/*animation:fadestuff 3s cubic-bezier(0.7, 0.1, 0.6, 0.9) infinite;*/
+animation:fadestuff 3s ease-in infinite;
+}
+
+
+@keyframes fadestuff {
+   50%{
+      opacity:.7
+   }
+}
