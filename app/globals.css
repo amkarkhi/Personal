@@ -27,9 +27,20 @@ body {
 }
 
 
+.animate-fade-in{
+   animation:fadein 400ms ease 1 ;
+}
+
+
 .animate-blink-opacity{
 /*animation:fadestuff 3s cubic-bezier(0.7, 0.1, 0.6, 0.9) infinite;*/
-animation:fadestuff 3s ease-in infinite;
+   animation:fadestuff 3s ease-in infinite;
+}
+
+
+@keyframes fadein{
+   0%{opacity:0}
+   100%{opacity:1}
 }
 
 

@@ -11,15 +11,21 @@ const BinaryView = () => {
    useEffect(() => {
       const t = setInterval(() => {
          if (ref.current) {
-            ref.current.innerText = `${generaterandomStrong(ref.current.getBoundingClientRect().width * ref.current.getBoundingClientRect().height / 100)}`
+            const bound = ref.current.getBoundingClientRect();
+            ref.current.innerText =
+               `${generaterandomStrong(
+                  bound.width * bound.height / 100
+               )}`
          }
       }, 100)
-      setLoading(false)
-      return () => { clearInterval(t) }
+      return () => {
+         clearInterval(t);
+         setLoading(false);
+      }
    }, [ref]);
 
-   return loading ? <LoadingComponent/>: (
-      <div style={{ zIndex: -1 }} className="animate-blink-opacity  bg-black fixed inset-0 z-0 break-words w-screen h-screen text-red-500 overflow-hidden isolate" >
+   return loading ? null : (
+      <div style={{ zIndex: -1 }} className="animate-fade-in animate-blink-opacity  bg-black fixed inset-0 z-0 break-words w-screen h-screen text-red-500 overflow-hidden isolate" >
          <div ref={ref}
             style={{
                WebkitMaskImage: "radial-gradient(circle at 50% 50%,black 10%, transparent 80%)",
