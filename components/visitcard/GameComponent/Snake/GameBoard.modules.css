@@ -1,0 +1,16 @@
+#snakebar{
+   content:"" ;
+   width: 10px;
+   aspect-ratio:1 / 1;
+   background:blue;
+   display:block;
+   position:absolute;
+}
+#score{
+   content:"";
+   width: 10px;
+   aspect-ratio:1 / 1;
+   background:red;
+   display:block;
+   position:absolute;
+}
