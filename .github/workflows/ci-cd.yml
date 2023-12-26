@@ -1,0 +1,42 @@
+name: CI/CD
+
+environment:
+  COMPOSE-DIR: /root/sites/all/personal
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and Push the Docker image to the container registry
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ghcr.io/${{github.repository}}:${{github.sha}}
+          secrets: |
+            GIT_AUTH_TOKEN=${{secrets.GIT_TOKEN}}
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to server with ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            echo "Deploying to server..."
+            docker pull ghcr.io/${{github.repository}}:${{github.sha}}
+            cd ${{ COMPOSE-DIR }}
+            echo "Compose up to server..."
+            sed -i "s/image: .*/image: ghcr.io/${{github.repository}}:${{github.sha}}" docker-compose.yml
+            docker-compose up -d
