@@ -24,7 +24,7 @@ jobs:
           push: true
           tags: ghcr.io/${{env.REPO_LC}}:${{github.sha}}
           github-token: ${{secrets.GIT_TOKEN}}
-          registry: ghcr.io
+          # registry: ghcr.io
           # secrets: |
           # GITHUB_TOKEN=
           # DOCKER_TOKEN=${{secrets.DOCKER_TOKEN}}
