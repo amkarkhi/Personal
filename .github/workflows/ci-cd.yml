@@ -1,7 +1,7 @@
 name: CI/CD
 
 environment:
-  COMPOSE-DIR: /root/sites/all/personal
+  COMPOSE_DIR: /root/sites/all/personal
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
           script: |
             echo "Deploying to server..."
             docker pull ghcr.io/${{github.repository}}:${{github.sha}}
-            cd ${{ COMPOSE-DIR }}
+            cd ${{ vars.COMPOSE_DIR }}
             echo "Compose up to server..."
             sed -i "s/image: .*/image: ghcr.io/${{github.repository}}:${{github.sha}}" docker-compose.yml
             docker-compose up -d
