@@ -9,6 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Set lower case
+        run: |
+          echo "REPO_LC=${{ github.repository }}" >>${GITHUB_ENV}
+        env:
+          REPO_LC: ${{ github.repository }}
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build and Push the Docker image to the container registry
@@ -17,13 +22,18 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{github.repository_lowercase}}:${{github.sha}}
+          tags: ghcr.io/${{env.REPO_LC}}:${{github.sha}}
           secrets: |
             GIT_AUTH_TOKEN=${{secrets.GIT_TOKEN}}
 
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Set lower case
+        run: |
+          echo "REPO_LC=${{ github.repository }}" >>${GITHUB_ENV}
+        env:
+          REPO_LC: ${{ github.repository }}
       - name: Deploy to server with ssh
         uses: appleboy/ssh-action@master
         with:
@@ -32,8 +42,8 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             echo "Deploying to server..."
-            docker pull ghcr.io/${REPO_LC}:${{github.sha}}
+            docker pull ghcr.io/${{env.REPO_LC}}:${{github.sha}}
             cd ${{ vars.COMPOSE_DIR }}
             echo "Compose up to server..."
-            sed -i "s/image: .*/image: ghcr.io/${{github.repository_lowercase}}:${{github.sha}}" docker-compose.yml
+            sed -i "s/image: .*/image: ghcr.io/${{env.REPO_LC}}:${{github.sha}}" docker-compose.yml
             docker-compose up -d
