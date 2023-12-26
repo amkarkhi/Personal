@@ -22,7 +22,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{github.REPO_LC}}:${{github.sha}}
+          tags: ghcr.io/${{REPO_LC}}:${{github.sha}}
           secrets: |
             GIT_AUTH_TOKEN=${{secrets.GIT_TOKEN}}
 
@@ -42,8 +42,8 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             echo "Deploying to server..."
-            docker pull ghcr.io/${{github.REPO_LC}}:${{github.sha}}
+            docker pull ghcr.io/${{REPO_LC}}:${{github.sha}}
             cd ${{ vars.COMPOSE_DIR }}
             echo "Compose up to server..."
-            sed -i "s/image: .*/image: ghcr.io/${{github.REPO_LC}}:${{github.sha}}" docker-compose.yml
+            sed -i "s/image: .*/image: ghcr.io/${{REPO_LC}}:${{github.sha}}" docker-compose.yml
             docker-compose up -d
