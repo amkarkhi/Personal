@@ -3,49 +3,39 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
-  }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
-
-.animate-fade-in{
-   animation:fadein 400ms ease 1 ;
+.animate-fade-in {
+    animation: fadein 400ms ease 1;
 }
 
-
-.animate-blink-opacity{
-/*animation:fadestuff 3s cubic-bezier(0.7, 0.1, 0.6, 0.9) infinite;*/
-   animation:fadestuff 3s ease-in infinite;
+.animate-blink-opacity {
+    /*animation:fadestuff 3s cubic-bezier(0.7, 0.1, 0.6, 0.9) infinite;*/
+    animation: fadestuff 3s ease-in infinite;
 }
 
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
 
-@keyframes fadein{
-   0%{opacity:0}
-   100%{opacity:1}
+    100% {
+        opacity: 1;
+    }
 }
-
 
 @keyframes fadestuff {
-   50%{
-      opacity:.7
-   }
+    50% {
+        opacity: 0.7;
+    }
 }
