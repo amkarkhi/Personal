@@ -1,6 +1,6 @@
-import LoadingComponent from "@/components/visitcard/LoadingComponent"
+import LoadingComponent from "@/components/visitcard/LoadingComponent";
 
- const Loading = () => {
-   return <LoadingComponent />
-}
+const Loading = () => {
+  return <LoadingComponent />;
+};
 export default Loading;

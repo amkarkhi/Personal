@@ -1,8 +1,8 @@
-import GameBoard from '@/components/visitcard/GameComponent/Snake/GameBoard'
-import React from 'react'
+import GameBoard from "@/components/visitcard/GameComponent/Snake/GameBoard";
+import React from "react";
 
 const page = () => {
-   return <GameBoard />
-}
+  return <GameBoard />;
+};
 
-export default page
+export default page;
