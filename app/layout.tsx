@@ -18,9 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body className={inter.className}>
-        <section className='h-screen w-screen relative overflow-hidden'>
+        <section className="h-screen w-screen relative overflow-hidden">
           <MainView>
             {children}
             <BinaryView />
