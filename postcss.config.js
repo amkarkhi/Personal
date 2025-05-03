@@ -2,4 +2,4 @@ const plugins = {
   tailwindcss: {},
   autoprefixer: {},
 };
-module.exports = plugins;
+module.exports = { plugins };
