@@ -2,10 +2,11 @@
 
 import Visitcard from "@/components/visitcard/Visitcard";
 
-export default function Home() {
+const Home = () => {
   return (
-    <div className='animate-fade-in'>
+    <div className="animate-fade-in">
       <Visitcard />
     </div>
   );
-}
+};
+export default Home;
