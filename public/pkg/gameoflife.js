@@ -63,21 +63,6 @@ export class Universe {
         return Universe.__wrap(ret);
     }
     /**
-     * @returns {string}
-     */
-    render() {
-        let deferred1_0;
-        let deferred1_1;
-        try {
-            const ret = wasm.universe_render(this.__wbg_ptr);
-            deferred1_0 = ret[0];
-            deferred1_1 = ret[1];
-            return getStringFromWasm0(ret[0], ret[1]);
-        } finally {
-            wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
-        }
-    }
-    /**
      * @returns {number}
      */
     width() {
@@ -97,6 +82,18 @@ export class Universe {
     cells() {
         const ret = wasm.universe_cells(this.__wbg_ptr);
         return ret >>> 0;
+    }
+    /**
+     * @param {number} width
+     */
+    set_width(width) {
+        wasm.universe_set_width(this.__wbg_ptr, width);
+    }
+    /**
+     * @param {number} height
+     */
+    set_height(height) {
+        wasm.universe_set_height(this.__wbg_ptr, height);
     }
 }
 
@@ -134,6 +131,10 @@ async function __wbg_load(module, imports) {
 function __wbg_get_imports() {
     const imports = {};
     imports.wbg = {};
+    imports.wbg.__wbg_random_3ad904d98382defe = function() {
+        const ret = Math.random();
+        return ret;
+    };
     imports.wbg.__wbindgen_init_externref_table = function() {
         const table = wasm.__wbindgen_export_0;
         const offset = table.grow(4);

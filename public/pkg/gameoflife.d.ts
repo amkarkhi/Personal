@@ -9,10 +9,11 @@ export class Universe {
   free(): void;
   tick(): void;
   static new(width: number, height: number): Universe;
-  render(): string;
   width(): number;
   height(): number;
   cells(): number;
+  set_width(width: number): void;
+  set_height(height: number): void;
 }
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -22,12 +23,12 @@ export interface InitOutput {
   readonly __wbg_universe_free: (a: number, b: number) => void;
   readonly universe_tick: (a: number) => void;
   readonly universe_new: (a: number, b: number) => number;
-  readonly universe_render: (a: number) => [number, number];
   readonly universe_width: (a: number) => number;
   readonly universe_height: (a: number) => number;
   readonly universe_cells: (a: number) => number;
+  readonly universe_set_width: (a: number, b: number) => void;
+  readonly universe_set_height: (a: number, b: number) => void;
   readonly __wbindgen_export_0: WebAssembly.Table;
-  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __wbindgen_start: () => void;
 }
 

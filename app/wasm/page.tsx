@@ -2,22 +2,26 @@
 
 import { useEffect, useRef } from "react";
 import * as wasm from "@wasm/gameoflife";
+import { useMirrored } from "@/components/visitcard/views/MainView";
 
 const CELL_SIZE = 10;
-const GRID_COLOR = "#ccc";
+const GRID_COLOR = "transparent";
+// const GRID_COLOR = "#eee";
 const DEAD_COLOR = "#fff";
 const ALIVE_COLOR = "#000";
 
 const Page = () => {
+  const isMirrored = useMirrored();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const universeRef = useRef<wasm.Universe | null>(null);
   const animationIdRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (isMirrored) return;
     const initWasm = async () => {
       let w = await wasm.default();
       const memory = w.memory;
-      const universe = wasm.Universe.new(30, 50); // Example size
+      const universe = wasm.Universe.new(80, 50); // Example size
       universeRef.current = universe;
       const canvas = canvasRef.current;
       if (canvas) {
@@ -33,12 +37,10 @@ const Page = () => {
     initWasm();
 
     return () => {
-      if (animationIdRef.current) {
-        // cancelAnimationFrame(animationIdRef.current);
-        clearTimeout(animationIdRef.current); // Use clearTimeout instead of cancelAnimationFrame
-      }
+      if (animationIdRef.current) clearTimeout(animationIdRef.current);
+      if (universeRef.current) universeRef.current.free();
     };
-  }, []);
+  }, [isMirrored]);
 
   const drawGrid = (ctx: CanvasRenderingContext2D, universe: wasm.Universe) => {
     ctx.beginPath();
@@ -70,12 +72,12 @@ const Page = () => {
       universe.width() * universe.height(),
     );
 
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Clear the canvas
+    // ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Clear the canvas
     drawGrid(ctx, universe); // Draw the grid
 
-    let idx = 0;
     for (let row = 0; row < universe.height(); row++) {
       for (let col = 0; col < universe.width(); col++) {
+        const idx = row * universe.width() + col;
         ctx.fillStyle =
           cells[idx] === wasm.Cell.Dead ? DEAD_COLOR : ALIVE_COLOR;
         ctx.fillRect(
@@ -84,9 +86,9 @@ const Page = () => {
           CELL_SIZE - 1,
           CELL_SIZE - 1,
         );
-        idx++;
       }
     }
+    ctx.stroke();
   };
 
   const renderLoop = (
@@ -98,13 +100,13 @@ const Page = () => {
       universe.tick(); // Advance the universe state
       drawCells(ctx, universe, memory); // Draw the cells
       // animationIdRef.current = requestAnimationFrame(loop); // Continue the loop
-      animationIdRef.current = window.setTimeout(loop, 300); // Add delay using setTimeout
+      animationIdRef.current = window.setTimeout(loop, 60); // Add delay using setTimeout
     };
 
     loop();
   };
 
-  return <canvas ref={canvasRef}>test</canvas>;
+  return <canvas ref={canvasRef} />;
 };
 
 export default Page;
